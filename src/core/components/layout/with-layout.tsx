@@ -2,11 +2,11 @@ import React from "react";
 import { FC } from "react";
 import { Route, RouteProps } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import { DesktopHeader, MobileHeader } from "../components/layout/header";
-import { Footer } from "../components/layout/footer";
-
-import headerLinks from "./header-data.json";
+import { DesktopHeader, MobileHeader } from "./header";
+import { Footer } from "./footer";
 import { Helmet } from "react-helmet-async";
+
+import headerLinks from "../../data/header-footer-links.json"
 
 export interface PageRouteProps extends RouteProps {
   pageData?: PageDataProps;
@@ -53,13 +53,14 @@ const withLayout = <P extends Record<string, unknown>>(
           {pageData.meta?.map((meta, i) => (
             <meta key={i} name={meta.name} content={meta.content}></meta>
           ))}
+          <meta name="description" content={pageData.metaDescription}></meta>
         </Helmet>
-        {isDesktop && <DesktopHeader headerLinks={headerLinks} />}
-        {isMobile && <MobileHeader headerLinks={headerLinks} />}
+        {isDesktop && <DesktopHeader links={headerLinks} />}
+        {isMobile && <MobileHeader links={headerLinks} />}
         <main id="content">
           <ContentComponent {...props} />
         </main>
-        {Footer && <Footer />}
+        {Footer && <Footer links={headerLinks} />}
       </>
     );
   };

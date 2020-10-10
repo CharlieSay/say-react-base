@@ -1,12 +1,16 @@
-import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import ReactDOM from "react-dom";
-import App from "./App";
-import "./core/scss/.critical.scss";
+import React, { Suspense } from 'react'
+import { HelmetProvider } from 'react-helmet-async'
+import ReactDOM from 'react-dom'
+
+import Loading from './pages/utility-pages/loading/loading'
+import Routes from './routes'
+import './core/scss/.critical.scss'
 
 ReactDOM.render(
-  <BrowserRouter basename={""}>
-    <App />
-  </BrowserRouter>,
-  document.getElementById("root")
-);
+    <HelmetProvider>
+      <Suspense fallback={<Loading />}>
+        <Routes />
+      </Suspense>
+    </HelmetProvider>,
+  document.getElementById('root'),
+)
